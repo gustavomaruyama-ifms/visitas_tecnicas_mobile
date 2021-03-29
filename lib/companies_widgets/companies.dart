@@ -22,7 +22,10 @@ class Companies extends StatelessWidget {
                 )
           ],
         ),
-        body: CompaniesListView()
+        body: CompaniesListView(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
@@ -45,7 +48,7 @@ class _CompaniesListViewState extends State<CompaniesListView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Company>>(
-      future: listAllCompanies(1,1),
+      future: listAllCompanies(1,10),
       builder: (context, snapshot){
         if (snapshot.hasError) print(snapshot.error);
         if(snapshot.hasData) {
