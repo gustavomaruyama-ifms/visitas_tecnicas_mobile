@@ -1,17 +1,20 @@
 import 'package:intl/intl.dart';
+import 'package:visitas_tecnicas_mobile/models/subscription.dart';
 import 'package:visitas_tecnicas_mobile/models/visit.dart';
 
 class VisitDTO{
   Visit visit;
   String statusSubscription;
   bool updatingSubscription;
+  Subscription subscription;
 
-  VisitDTO({this.visit, this.statusSubscription, this.updatingSubscription=false});
+  VisitDTO({this.visit, this.statusSubscription, this.updatingSubscription=false, this.subscription});
 
   factory VisitDTO.fromJson(Map<String,dynamic> json){
     return VisitDTO(
         visit: Visit.fromJson(json['visit']),
-        statusSubscription: json['statusSubscription']
+        statusSubscription: json['statusSubscription'],
+        subscription:  json['subscription'] is Map? Subscription.fromJson(json['subscription']): Subscription(id:json['statusSubscription'])
     );
   }
 

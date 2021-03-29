@@ -7,6 +7,7 @@ import 'package:visitas_tecnicas_mobile/models/visit_dto.dart';
 import 'package:visitas_tecnicas_mobile/services/create_subscription.dart';
 import 'package:visitas_tecnicas_mobile/services/find_logo_by_company_id.dart';
 import 'package:visitas_tecnicas_mobile/services/list_open_visits.dart';
+import 'package:visitas_tecnicas_mobile/services/remove_subscription.dart';
 
 class OpenVisits extends StatelessWidget{
   final APP_BAR_TITLE = "Visitas Técnicas Abertas";
@@ -95,7 +96,8 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                         Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child:
-                                dto.updatingSubscription? CircularProgressIndicator():
+                                dto.updatingSubscription?
+                                CircularProgressIndicator():
                                 dto.statusSubscription=='NAO_INSCRITO'?
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -118,8 +120,15 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.redAccent,
                                   ),
-                                  onPressed: () {
-
+                                  onPressed: () async{
+                                    await setState(() {
+                                      dto.updatingSubscription = true;
+                                    });
+                                    await removeSubscription(dto.subscription);
+                                    _openVisits = await listOpenVisits(1, 10);
+                                    await setState(() {
+                                      dto.updatingSubscription = false;
+                                    });
                                   },
                                 )
                         )
