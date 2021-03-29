@@ -74,45 +74,47 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                   },
                 )
               ) ,
-              Divider(),
+
+              Container(height: 140, child: VerticalDivider(),),
+
               Padding(
-              padding: const EdgeInsets.only(right: 10, top: 10, bottom: 10),
-                child:Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                  Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child:Text(dto.visit.company.name, style: TextStyle(fontWeight: FontWeight.bold),)
-                  ),
-                  Text("${dto.visit.company.city} - ${dto.visit.company.state}"),
-                  Text("Data: ${dto.formattedDate}"),
-                  Text("Saída/Chegada: ${dto.formattedtimeToLeave } Hs ${dto.formattedtimeToArrive} Hs"),
-                  Text("Nº de vagas: ${dto.visit.vacancies}"),
-                  Text("Status: ${dto.statusSubscription}"),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child:
-                    dto.statusSubscription?
-                    ElevatedButton(
-                      child: Text("Cancelar Inscrição"),
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.redAccent,
-                      ),
-                      onPressed: () {
+                padding: const EdgeInsets.only(left:10, right: 10, top: 10, bottom: 10),
+                  child:Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                      child:Text(dto.visit.company.name, style: TextStyle(fontWeight: FontWeight.bold),)
+                    ),
+                    Text("${dto.visit.company.city} - ${dto.visit.company.state}"),
+                    Text("Data: ${dto.formattedDate}"),
+                    Text("Saída/Retorno: ${dto.formattedtimeToLeave } Hs / ${dto.formattedtimeToArrive} Hs"),
+                    Text("Nº de vagas: ${dto.visit.vacancies}"),
+                    Text("Status: ${dto.statusSubscription}"),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child:
+                      dto.statusSubscription?
+                      ElevatedButton(
+                        child: Text("Cancelar Inscrição"),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.redAccent,
+                        ),
+                        onPressed: () {
 
-                      },
-                    ):
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.lightGreen,
-                      ),
-                      child: Text("Inscrever-se"),
-                      onPressed: (){
+                        },
+                      ):
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.lightGreen,
+                        ),
+                        child: Text("Inscrever-se"),
+                        onPressed: (){
 
-                      },
+                        },
+                      )
                     )
-                  )
-                ],)
+                  ],)
               )
             ],
           )
