@@ -5,7 +5,7 @@ import 'package:visitas_tecnicas_mobile/models/user.dart';
 class Visit{
   String id;
   Company company;
-  String userId;
+  User user;
   int vacancies;
   Course course;
   DateTime date;
@@ -13,16 +13,16 @@ class Visit{
   DateTime timeToArrive;
   String status;
 
-  Visit({this.id, this.company, this.userId, this.vacancies, this.course, this.date,
+  Visit({this.id, this.company, this.user, this.vacancies, this.course, this.date,
       this.timeToLeave, this.timeToArrive, this.status});
 
   factory Visit.fromJson(Map<String,dynamic> json){
     return Visit(
       id : json['_id'],
-      company: Company.fromJson(json['company']),
-      userId: json['user'],
+      company: json['company'] is Map? Company.fromJson(json['company']): Company(id:json['company']),
+      user: json['user'] is Map? User.fromJson(json['user']): User (id : json['user']),
       vacancies: json['vacancies'],
-      course : Course.fromJson(json['course']),
+      course : json['course'] is Map? Course.fromJson(json['course']): Course(id:json['course']),
       date: DateTime.parse(json['date']),
       timeToArrive: DateTime.parse(json['timeToLeave']),
       timeToLeave: DateTime.parse(json['timeToArrive']),

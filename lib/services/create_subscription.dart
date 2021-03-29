@@ -4,7 +4,7 @@ import 'package:visitas_tecnicas_mobile/models/subscription.dart';
 import 'package:visitas_tecnicas_mobile/services/config.dart';
 import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 
-Future<void> createSubscription(visit) async{
+Future<Subscription> createSubscription(visit) async{
   final user = await getUserData();
 
   Subscription subscription = Subscription(visit: visit);

@@ -8,7 +8,7 @@ class Subscription{
 
   factory Subscription.fromJson(Map<String, dynamic> json){
     return Subscription(
-      visit: Visit.fromJson(json['visit']),
+      visit: json['visit'] is Map ? Visit.fromJson(json['visit']): Visit(id: json['visit']),
       status: json['status']
     );
   }

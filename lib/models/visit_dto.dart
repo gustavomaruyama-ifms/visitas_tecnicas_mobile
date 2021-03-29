@@ -4,8 +4,9 @@ import 'package:visitas_tecnicas_mobile/models/visit.dart';
 class VisitDTO{
   Visit visit;
   String statusSubscription;
+  bool updatingSubscription;
 
-  VisitDTO({this.visit, this.statusSubscription});
+  VisitDTO({this.visit, this.statusSubscription, this.updatingSubscription=false});
 
   factory VisitDTO.fromJson(Map<String,dynamic> json){
     return VisitDTO(

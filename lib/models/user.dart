@@ -1,15 +1,17 @@
 import 'dart:convert';
 
 class User{
+  String id;
   String email;
   String name;
   String role;
   String token;
 
-  User({this.email,this.name, this.role, this.token});
+  User({this.id, this.email,this.name, this.role, this.token});
 
   factory User.fromJson(Map<String, dynamic> json){
     return User(
+        id: json['id'],
         email:json['email'],
         name:json['name'],
         role:json['role']);

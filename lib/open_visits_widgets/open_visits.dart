@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:visitas_tecnicas_mobile/models/subscription.dart';
 import 'package:visitas_tecnicas_mobile/models/visit.dart';
 import 'package:visitas_tecnicas_mobile/models/visit_dto.dart';
 import 'package:visitas_tecnicas_mobile/services/create_subscription.dart';
@@ -94,25 +95,33 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                         Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child:
-                            dto.statusSubscription=='NAO_INSCRITO'?
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.lightGreen,
-                              ),
-                              child: Text("Inscrever-se"),
-                              onPressed: (){
-                                  createSubscription(dto.visit);
-                              },
-                            ):
-                            ElevatedButton(
-                              child: Text("Cancelar Inscrição"),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.redAccent,
-                              ),
-                              onPressed: () {
+                                dto.updatingSubscription? CircularProgressIndicator():
+                                dto.statusSubscription=='NAO_INSCRITO'?
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.lightGreen,
+                                  ),
+                                  child: Text("Inscrever-se"),
+                                  onPressed: () async{
+                                    await setState(() {
+                                      dto.updatingSubscription = true;
+                                    });
+                                    await createSubscription(dto.visit);
+                                    _openVisits = await listOpenVisits(1, 10);
+                                    await setState(() {
+                                      dto.updatingSubscription = false;
+                                    });
+                                  },
+                                ):
+                                ElevatedButton(
+                                  child: Text("Cancelar Inscrição"),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.redAccent,
+                                  ),
+                                  onPressed: () {
 
-                              },
-                            )
+                                  },
+                                )
                         )
                       ],)
                 )
