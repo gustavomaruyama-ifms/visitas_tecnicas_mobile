@@ -15,10 +15,9 @@ Future<List<VisitDTO>> listOpenVisits(page, quantityPerPage) async{
 
   if(response.statusCode == 200){
     final parsed = await jsonDecode(response.body).cast<Map<String,dynamic>>();
-    print(parsed);
     return compute(parseVisit, response.body);
   }else{
-
+    throw Exception(response.body);
   }
 }
 

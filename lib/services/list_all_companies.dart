@@ -16,7 +16,7 @@ Future<List<Company>> listAllCompanies(page, quantityPerPage) async{
     print(parsed);
     return compute(parseCompany, response.body);
   }else{
-
+    throw Exception(response.body);
   }
 }
 
