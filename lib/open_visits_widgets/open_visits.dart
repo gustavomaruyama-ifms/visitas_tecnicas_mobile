@@ -27,6 +27,7 @@ class ListViewOpenVisits extends StatefulWidget{
 
 class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
   List<VisitDTO> _openVisits;
+
   
   @override
   Widget build(BuildContext context) {
@@ -49,22 +50,72 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
   }
 
   Widget _itemBuilder(context, i) {
+    final theme = Theme.of(context);
+    final titleStyle = theme.textTheme.headline5.copyWith(color: Colors.white);
+    final descriptionStyle = theme.textTheme.subtitle1;
+
     VisitDTO dto = _openVisits[i];
+
     return Card(
-        child: ListTile(
-          leading: FutureBuilder(
-            future: findLogoByCompanyId(dto.visit.company.id,50.0,50.0),
-            builder: (context,snapshot){
-              if(snapshot.hasData){
-                return snapshot.data;
-              }else{
-                return Container(child: Text(""),);
-              }
-            },
-          ),
-          title: Text(dto.visit.company.name),
-          subtitle: Text("Status: ${dto.visit.status}"),
-          isThreeLine: true,
+        child: Container(
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child:
+                FutureBuilder(
+                  future: findLogoByCompanyId(dto.visit.company.id,70.0,70.0),
+                  builder: (context,snapshot){
+                    if(snapshot.hasData){
+                      return snapshot.data;
+                    }else{
+                      return Container(child: Text(""),);
+                    }
+                  },
+                )
+              ) ,
+              Divider(),
+              Padding(
+              padding: const EdgeInsets.only(right: 10, top: 10, bottom: 10),
+                child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child:Text(dto.visit.company.name, style: TextStyle(fontWeight: FontWeight.bold),)
+                  ),
+                  Text("${dto.visit.company.city} - ${dto.visit.company.state}"),
+                  Text("Data: ${dto.formattedDate}"),
+                  Text("Saída/Chegada: ${dto.formattedtimeToLeave } Hs ${dto.formattedtimeToArrive} Hs"),
+                  Text("Nº de vagas: ${dto.visit.vacancies}"),
+                  Text("Status: ${dto.statusSubscription}"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child:
+                    dto.statusSubscription?
+                    ElevatedButton(
+                      child: Text("Cancelar Inscrição"),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.redAccent,
+                      ),
+                      onPressed: () {
+
+                      },
+                    ):
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.lightGreen,
+                      ),
+                      child: Text("Inscrever-se"),
+                      onPressed: (){
+
+                      },
+                    )
+                  )
+                ],)
+              )
+            ],
+          )
         )
     );
   }
