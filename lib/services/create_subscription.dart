@@ -4,7 +4,7 @@ import 'package:visitas_tecnicas_mobile/models/subscription.dart';
 import 'package:visitas_tecnicas_mobile/services/config.dart';
 import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 
-Future<void> createSubscription(visit) async{
+Future<Subscription> createSubscription(visit) async{
   final user = await getUserData();
 
   Subscription subscription = Subscription(visit: visit);
@@ -17,7 +17,10 @@ Future<void> createSubscription(visit) async{
       body: jsonEncode(subscription.toJson())
   );
 
-  if (response.statusCode != 200){
+  if (response.statusCode == 200){
+    subscription = Subscription.fromJson(jsonDecode(response.body));
+    return subscription;
+  }else{
     throw Exception(response.body);
   }
 }

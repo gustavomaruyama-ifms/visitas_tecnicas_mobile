@@ -108,10 +108,10 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                                     await setState(() {
                                       dto.updatingSubscription = true;
                                     });
-                                    await createSubscription(dto.visit);
-                                    _openVisits = await listOpenVisits(1, 10);
+                                    Subscription subscription = await createSubscription(dto.visit);
                                     await setState(() {
-                                      this._openVisits = _openVisits;
+                                      dto.subscription = subscription;
+                                      dto.statusSubscription = subscription.status;
                                       dto.updatingSubscription = false;
                                     });
                                   },
@@ -126,9 +126,9 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                                       dto.updatingSubscription = true;
                                     });
                                     await removeSubscription(dto.subscription);
-                                    _openVisits = await listOpenVisits(1, 10);
                                     await setState(() {
-                                      this._openVisits = _openVisits;
+                                      dto.subscription = null;
+                                      dto.statusSubscription = "NAO_INSCRITO";
                                       dto.updatingSubscription = false;
                                     });
                                   },
