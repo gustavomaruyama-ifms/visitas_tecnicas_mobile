@@ -29,4 +29,10 @@ class Visit{
       status: json['status']
     );
   }
+
+  Map<String, String> toJson(){
+    return {
+      '_id':id
+    };
+  }
 }

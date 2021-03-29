@@ -3,8 +3,7 @@ import 'package:visitas_tecnicas_mobile/models/visit.dart';
 
 class VisitDTO{
   Visit visit;
-  bool statusSubscription;
-
+  String statusSubscription;
 
   VisitDTO({this.visit, this.statusSubscription});
 
