@@ -111,6 +111,7 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                                     await createSubscription(dto.visit);
                                     _openVisits = await listOpenVisits(1, 10);
                                     await setState(() {
+                                      this._openVisits = _openVisits;
                                       dto.updatingSubscription = false;
                                     });
                                   },
@@ -127,6 +128,7 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                                     await removeSubscription(dto.subscription);
                                     _openVisits = await listOpenVisits(1, 10);
                                     await setState(() {
+                                      this._openVisits = _openVisits;
                                       dto.updatingSubscription = false;
                                     });
                                   },
