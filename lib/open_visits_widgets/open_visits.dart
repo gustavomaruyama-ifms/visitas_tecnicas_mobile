@@ -57,14 +57,15 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
     VisitDTO dto = _openVisits[i];
     return Card(
         key: Key(dto.visit.id),
-        child: Container(
+        child: Padding(
+            padding: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
             child: Row(
+
               children: [
-                Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child:
+                Container(
+                  child:
                     FutureBuilder(
-                      future: findLogoByCompanyId(dto.visit.company.id,70.0,70.0),
+                      future: findLogoByCompanyId(dto.visit.company.id,80.0,80.0),
                       builder: (context,snapshot){
                         if(snapshot.hasData){
                           return snapshot.data;
@@ -73,71 +74,112 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                         }
                       },
                     )
-                ) ,
+                ),
 
-                Container(height: 140, child: VerticalDivider(),),
+                Container(
+                    height: 180,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 5, right: 5),
+                      child: VerticalDivider(),
+                    )
+                ),
 
-                Padding(
-                    padding: const EdgeInsets.only(left:10, right: 10, top: 10, bottom: 10),
-                    child:Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child:Text(dto.visit.company.name, style: TextStyle(fontWeight: FontWeight.bold),)
-                        ),
-                        Text(dto.visit.company.city),
-                        Text(dto.visit.company.state),
-                        Text("Data: ${dto.formattedDate}"),
-                        Text("Saída/Retorno: ${dto.formattedtimeToLeave } Hs / ${dto.formattedtimeToArrive} Hs"),
-                        Text("Nº de vagas: ${dto.visit.vacancies}"),
-                        Text("Status: ${dto.statusSubscription}"),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child:
-                                dto.updatingSubscription?
-                                CircularProgressIndicator():
-                                dto.statusSubscription=='NAO_INSCRITO'?
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.lightGreen,
-                                  ),
-                                  child: Text("Inscrever-se"),
-                                  onPressed: () async{
-                                    setState(() {
-                                      dto.updatingSubscription = true;
-                                    });
-                                    Subscription subscription = await createSubscription(dto.visit);
-                                    setState(() {
-                                      dto.subscription = subscription;
-                                      dto.statusSubscription = subscription.status;
-                                      dto.updatingSubscription = false;
-                                    });
-                                  },
-                                ):
-                                ElevatedButton(
-                                  child: Text("Cancelar Inscrição"),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.redAccent,
-                                  ),
-                                  onPressed: () async{
-                                    setState(() {
-                                      dto.updatingSubscription = true;
-                                    });
-                                    await removeSubscription(dto.subscription);
-                                    setState(() {
-                                      dto.subscription = null;
-                                      dto.statusSubscription = "NAO_INSCRITO";
-                                      dto.updatingSubscription = false;
-                                    });
-                                  },
-                                )
-                        )
-                      ],)
+                Container(
+                    child:
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children:[
+                           Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: Text(dto.visit.company.name, style: TextStyle(fontWeight: FontWeight.bold)),
+                                ),
+                                Text(dto.visit.company.city+" "+dto.visit.company.state),
+                                Text("Data: ${dto.formattedDate}"),
+                                Text("Saída/Retorno: ${dto.formattedtimeToLeave } Hs / ${dto.formattedtimeToArrive} Hs"),
+                                Text("Nº de vagas: ${dto.visit.vacancies}"),
+                                Text("Status: ${dto.statusSubscription}"),
+                              ]
+                           ),
+
+                          Padding(
+                               padding: const EdgeInsets.only(top: 10),
+                               child: Container(
+                                   height: 32,
+                                   child: _buildButtons(dto)
+                               )
+                           )
+                        ]
+                    )
                 )
               ],
             )
         )
+    );
+  }
+  
+  Widget _buildButtons(dto){
+    if(dto.updatingSubscription){
+      return Container(
+          width: 32,
+          height: 32,
+          child:Center(child: CircularProgressIndicator())
+      );
+    }
+    
+    if(dto.statusSubscription=='NAO_INSCRITO') {
+      return _buildCreateSubscriptionButton(dto);
+    }
+
+    return _buildRemoveSubscription(dto);
+  }
+  
+  Widget _buildCreateSubscriptionButton(dto){
+    return Container(
+        child:ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.lightGreen,
+            ),
+            child: Text("Inscrever-se"),
+            onPressed: () async {
+              setState(() {
+                dto.updatingSubscription = true;
+              });
+              Subscription subscription = await createSubscription(dto.visit);
+              setState(() {
+                dto.subscription = subscription;
+                dto.statusSubscription = subscription.status;
+                dto.updatingSubscription = false;
+              });
+            }
+        )
+    );
+  }
+  
+  Widget _buildRemoveSubscription(dto) {
+    return
+      Container(
+        child:ElevatedButton(
+          child: Text("Cancelar Inscrição"),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.redAccent,
+          ),
+          onPressed: () async{
+            setState(() {
+              dto.updatingSubscription = true;
+            });
+            await removeSubscription(dto.subscription);
+            setState(() {
+              dto.subscription = null;
+              dto.statusSubscription = "NAO_INSCRITO";
+              dto.updatingSubscription = false;
+            });
+          }
+       )
     );
   }
 }
