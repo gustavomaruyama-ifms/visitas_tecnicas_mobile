@@ -37,12 +37,14 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
       future: listOpenVisits(1, 10),
       builder: (context, snapshot) {
         if (snapshot.hasError) print(snapshot.error);
-
         if(snapshot.hasData){
-          _openVisits = snapshot.data;
+          if(_openVisits == null) {
+            _openVisits = snapshot.data;
+          }
           return ListView.builder(
             itemBuilder: _itemBuilder,
             itemCount: _openVisits.length,
+            shrinkWrap: true,
           );
         }else{
           return Center(child: CircularProgressIndicator());
@@ -52,13 +54,9 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
   }
 
   Widget _itemBuilder(context, i) {
-    final theme = Theme.of(context);
-    final titleStyle = theme.textTheme.headline5.copyWith(color: Colors.white);
-    final descriptionStyle = theme.textTheme.subtitle1;
-
     VisitDTO dto = _openVisits[i];
-
     return Card(
+        key: Key(dto.visit.id),
         child: Container(
             child: Row(
               children: [
@@ -88,7 +86,8 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                             padding: const EdgeInsets.only(bottom: 10),
                             child:Text(dto.visit.company.name, style: TextStyle(fontWeight: FontWeight.bold),)
                         ),
-                        Text("${dto.visit.company.city} - ${dto.visit.company.state}"),
+                        Text(dto.visit.company.city),
+                        Text(dto.visit.company.state),
                         Text("Data: ${dto.formattedDate}"),
                         Text("Saída/Retorno: ${dto.formattedtimeToLeave } Hs / ${dto.formattedtimeToArrive} Hs"),
                         Text("Nº de vagas: ${dto.visit.vacancies}"),
@@ -105,11 +104,11 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                                   ),
                                   child: Text("Inscrever-se"),
                                   onPressed: () async{
-                                    await setState(() {
+                                    setState(() {
                                       dto.updatingSubscription = true;
                                     });
                                     Subscription subscription = await createSubscription(dto.visit);
-                                    await setState(() {
+                                    setState(() {
                                       dto.subscription = subscription;
                                       dto.statusSubscription = subscription.status;
                                       dto.updatingSubscription = false;
@@ -122,11 +121,11 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                                     primary: Colors.redAccent,
                                   ),
                                   onPressed: () async{
-                                    await setState(() {
+                                    setState(() {
                                       dto.updatingSubscription = true;
                                     });
                                     await removeSubscription(dto.subscription);
-                                    await setState(() {
+                                    setState(() {
                                       dto.subscription = null;
                                       dto.statusSubscription = "NAO_INSCRITO";
                                       dto.updatingSubscription = false;
