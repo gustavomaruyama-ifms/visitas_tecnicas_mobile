@@ -25,7 +25,7 @@ class Company{
       sector: Sector.fromJson(json['sector']),
       img: json['img'],
       address: json['address'],
-      disciplines: json['discipline'].cast<Map<String,dynamic>>().map<Discipline>((json) => Discipline.fromJson(json)).toList()
+      disciplines: json['discipline'] == null? null: json['discipline'].cast<Map<String,dynamic>>().map<Discipline>((json) => Discipline.fromJson(json)).toList()
     );
   }
 
