@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:visitas_tecnicas_mobile/models/company.dart';
 import 'package:visitas_tecnicas_mobile/models/course.dart';
 import 'package:visitas_tecnicas_mobile/models/user.dart';
@@ -32,7 +34,12 @@ class Visit{
 
   Map<String, String> toJson(){
     return {
-      '_id':id
+      '_id':id,
+      'date':date.toString(),
+      'timeToLeave':timeToLeave.toString(),
+      'timeToArrive': timeToArrive.toString(),
+      'vacancies': vacancies.toString(),
+      'company': company.id
     };
   }
 }

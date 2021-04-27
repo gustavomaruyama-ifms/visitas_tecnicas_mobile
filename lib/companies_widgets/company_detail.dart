@@ -6,9 +6,13 @@ import 'package:visitas_tecnicas_mobile/services/find_logo_by_company_id.dart';
 class CompanyDetails extends StatelessWidget{
   final APP_BAR_TITLE = "Detalhes da Empresa";
   Company company;
+
+  CompanyDetails(company){
+    this.company = company;
+  }
+
   @override
   Widget build(BuildContext context) {
-    company = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         appBar: AppBar(
           title: Text(APP_BAR_TITLE),

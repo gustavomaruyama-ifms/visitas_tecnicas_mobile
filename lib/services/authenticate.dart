@@ -20,7 +20,7 @@ Future<User> authenticate (email, password) async {
 
   if (response.statusCode == 200){
     User user = User.fromAuthenticationJson(jsonDecode(response.body));
-    setUserData(user);
+    await setUserData(user);
     return user;
   }else{
     throw Exception(response.body);

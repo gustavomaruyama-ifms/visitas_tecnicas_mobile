@@ -2,43 +2,54 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visitas_tecnicas_mobile/models/subscription.dart';
-import 'package:visitas_tecnicas_mobile/models/visit.dart';
 import 'package:visitas_tecnicas_mobile/models/visit_dto.dart';
 import 'package:visitas_tecnicas_mobile/services/create_subscription.dart';
 import 'package:visitas_tecnicas_mobile/services/find_logo_by_company_id.dart';
 import 'package:visitas_tecnicas_mobile/services/list_open_visits.dart';
 import 'package:visitas_tecnicas_mobile/services/remove_subscription.dart';
+import 'package:visitas_tecnicas_mobile/globals.dart' as globals ;
 
-class OpenVisits extends StatelessWidget{
+class OpenVisits extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return _OpenVisitsState();
+  }
+}
+
+class _OpenVisitsState extends State<OpenVisits>{
   final APP_BAR_TITLE = "Visitas Técnicas Abertas";
+  List<VisitDTO> _openVisits;
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(APP_BAR_TITLE)),
-      body: ListViewOpenVisits(),
+      body: _buildListViewOpenVisits(),
+      floatingActionButton: globals.user.role == "PROFESSOR"? FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () async{
+          await Navigator.pushNamed(context, '/add-visit');
+          setState(() {
+
+          });
+        },
+      ): null,
     );
   }
-}
-
-class ListViewOpenVisits extends StatefulWidget{
 
   @override
-  State<StatefulWidget> createState() {
-    return _ListViewOpenVisitsState();
-  }
-}
-
-class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
-  List<VisitDTO> _openVisits;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildListViewOpenVisits() {
     return FutureBuilder(
-      future: listOpenVisits(1, 10),
+      future: listOpenVisits(1, 20),
       builder: (context, snapshot) {
         if (snapshot.hasError) print(snapshot.error);
         if(snapshot.hasData){
-          if(_openVisits == null) {
+          if(_openVisits == null || snapshot.data.length != _openVisits.length) {
             _openVisits = snapshot.data;
           }
           return ListView.builder(
@@ -88,7 +99,6 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                     child:
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-
                         children:[
                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +108,8 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                                   padding: EdgeInsets.only(bottom: 10),
                                   child: Text(dto.visit.company.name, style: TextStyle(fontWeight: FontWeight.bold)),
                                 ),
-                                Text(dto.visit.company.city+" "+dto.visit.company.state),
+                                Text(dto.visit.company.city),
+                                Text(dto.visit.company.state),
                                 Text("Data: ${dto.formattedDate}"),
                                 Text("Saída/Retorno: ${dto.formattedtimeToLeave } Hs / ${dto.formattedtimeToArrive} Hs"),
                                 Text("Nº de vagas: ${dto.visit.vacancies}"),
@@ -107,10 +118,20 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
                            ),
 
                           Padding(
-                               padding: const EdgeInsets.only(top: 10),
-                               child: Container(
-                                   height: 32,
-                                   child: _buildButtons(dto)
+                               padding: const EdgeInsets.only(top: 10.0),
+                               child:
+                               globals.user.role == "PROFESSOR"?
+                               Row(
+                                   children: [
+                                     _buildListSubscribesButton(),
+                                     _buildEditButton(),
+                                     _buildRemoveButton()
+                                   ]
+                               ):
+                               Row(
+                                   children: [
+                                     _buildUserButtons(dto)
+                                   ]
                                )
                            )
                         ]
@@ -121,8 +142,10 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
         )
     );
   }
-  
-  Widget _buildButtons(dto){
+
+
+
+  Widget _buildUserButtons(dto){
     if(dto.updatingSubscription){
       return Container(
           width: 32,
@@ -137,10 +160,10 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
 
     return _buildRemoveSubscription(dto);
   }
-  
+
   Widget _buildCreateSubscriptionButton(dto){
     return Container(
-        child:ElevatedButton(
+        child:Padding(padding: EdgeInsets.only(right: 5.0), child:ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.lightGreen,
             ),
@@ -157,29 +180,77 @@ class _ListViewOpenVisitsState extends State<ListViewOpenVisits>{
               });
             }
         )
+        )
     );
   }
   
   Widget _buildRemoveSubscription(dto) {
     return
       Container(
-        child:ElevatedButton(
-          child: Text("Cancelar Inscrição"),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.redAccent,
-          ),
-          onPressed: () async{
-            setState(() {
-              dto.updatingSubscription = true;
-            });
-            await removeSubscription(dto.subscription);
-            setState(() {
-              dto.subscription = null;
-              dto.statusSubscription = "NAO_INSCRITO";
-              dto.updatingSubscription = false;
-            });
-          }
-       )
+          child:Padding(padding: EdgeInsets.only(right: 5.0), child:ElevatedButton(
+            child: Text("Cancelar Inscrição"),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.redAccent,
+            ),
+            onPressed: () async{
+              setState(() {
+                dto.updatingSubscription = true;
+              });
+              await removeSubscription(dto.subscription);
+              setState(() {
+                dto.subscription = null;
+                dto.statusSubscription = "NAO_INSCRITO";
+                dto.updatingSubscription = false;
+              });
+            }
+         )
+        )
     );
   }
+
+  Widget _buildRemoveButton(){
+    return Container(
+        child:Padding(padding: EdgeInsets.only(right: 5.0), child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.redAccent,
+            ),
+            child: Text("Remover"),
+            onPressed: () async {
+
+            }
+        )
+        )
+    );
+  }
+
+  Widget _buildListSubscribesButton(){
+    return Container(
+        child:Padding(padding: EdgeInsets.only(right: 5.0), child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.blueAccent,
+            ),
+            child: Text("Inscritos"),
+            onPressed: () async {
+
+            }
+        )
+        )
+    );
+  }
+
+  Widget _buildEditButton(){
+    return Container(
+        child:Padding(padding: EdgeInsets.only(right: 5.0), child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.lightBlueAccent,
+            ),
+            child: Text("Editar"),
+            onPressed: () async {
+
+            }
+        )
+        )
+    );
+  }
+
 }

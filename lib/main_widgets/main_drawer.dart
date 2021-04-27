@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:visitas_tecnicas_mobile/globals.dart' as globals;
+import 'package:visitas_tecnicas_mobile/storage/clear_user_data.dart';
 
 class MainDrawer extends StatefulWidget{
   @override
@@ -36,6 +38,7 @@ class _MainDrawerState extends State<MainDrawer>{
           ListTile(title: Text("Empresas/Instituições"),leading: Icon(Icons.business), onTap: _navigateToCompanies, ),
           ListTile(title: Text("Visitas Técnicas Abertas"),leading: Icon(Icons.campaign), onTap: _navigateToOpenVisits, ),
           ListTile(title: Text("Minhas Visitas"),leading: Icon(Icons.fact_check), onTap: _navigateToMyVisits, ),
+          ListTile(title: Text("Logout"),leading: Icon(Icons.logout), onTap: _logout, ),
         ]
     ));
   }
@@ -63,6 +66,13 @@ class _MainDrawerState extends State<MainDrawer>{
   void _navigateToMyVisits(){
     Navigator.pop(context);
     Navigator.pushNamed(context, '/my-visits');
+  }
+
+  void _logout() async {
+   await clearUserData();
+   globals.user = null;
+   Navigator.pop(context);
+   Navigator.pushNamed(context, '/');
   }
 
 }

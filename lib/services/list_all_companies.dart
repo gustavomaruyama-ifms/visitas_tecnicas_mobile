@@ -13,7 +13,6 @@ Future<List<Company>> listAllCompanies(page, quantityPerPage) async{
 
   if(response.statusCode == 200){
     final parsed = await jsonDecode(response.body).cast<Map<String,dynamic>>();
-    print(parsed);
     return compute(parseCompany, response.body);
   }else{
     throw Exception(response.body);

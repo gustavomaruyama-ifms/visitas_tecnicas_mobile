@@ -1,7 +1,7 @@
 import 'package:visitas_tecnicas_mobile/models/discipline.dart';
 import 'package:visitas_tecnicas_mobile/models/sector.dart';
 
-class Company {
+class Company{
   String id;
   String name;
   String about;
@@ -11,8 +11,9 @@ class Company {
   Sector sector;
   String img;
   List<Discipline> disciplines;
+  bool selected;
 
-  Company({this.id, this.name, this.about, this.city, this.state, this.address, this.sector, this.img, this.disciplines});
+  Company({this.id, this.name, this.about, this.city, this.state, this.address, this.sector, this.img, this.disciplines, this.selected = false});
 
   factory Company.fromJson(Map<String, dynamic> json){
     return Company(
@@ -26,5 +27,11 @@ class Company {
       address: json['address'],
       disciplines: json['discipline'].cast<Map<String,dynamic>>().map<Discipline>((json) => Discipline.fromJson(json)).toList()
     );
+  }
+
+  Map<String, String> toJson() {
+    return {
+      '_id': id
+    };
   }
 }
