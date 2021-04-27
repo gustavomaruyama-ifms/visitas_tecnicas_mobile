@@ -6,6 +6,7 @@ import 'package:visitas_tecnicas_mobile/login_widgets/login.dart';
 import 'package:visitas_tecnicas_mobile/main_widgets/home.dart';
 import 'package:visitas_tecnicas_mobile/my_visits_widgets/my_visits.dart';
 import 'package:visitas_tecnicas_mobile/open_visits_widgets/add_visit.dart';
+import 'package:visitas_tecnicas_mobile/open_visits_widgets/visit_subscriptions.dart';
 import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 
 import 'companies_widgets/companies.dart';
@@ -57,6 +58,10 @@ class Router{
       }
       case '/add-visit':{
         return MaterialPageRoute(builder: (_) => checkAuth(AddVisit()));
+      }
+      case '/visit-subscriptions':{
+        var visitDTO = settings.arguments;
+        return MaterialPageRoute(builder: (_) => checkAuth(VisitSubscriptions(visitDTO)));
       }
     }
   }

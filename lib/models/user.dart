@@ -11,7 +11,7 @@ class User{
 
   factory User.fromJson(Map<String, dynamic> json){
     return User(
-        id: json['id'],
+        id: json['_id'],
         email:json['email'],
         name:json['name'],
         role:json['role']);
@@ -27,9 +27,7 @@ class User{
   }
 
   factory User.fromAuthenticationJson(Map<String, dynamic> json){
-    print(json);
     Map<String, dynamic> userJson = json['user'];
-    print(userJson);
     return User(
         email:userJson['email'],
         name:userJson['name'],

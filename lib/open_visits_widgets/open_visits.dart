@@ -48,6 +48,7 @@ class _OpenVisitsState extends State<OpenVisits>{
       future: listOpenVisits(1, 20),
       builder: (context, snapshot) {
         if (snapshot.hasError) print(snapshot.error);
+
         if(snapshot.hasData){
           if(_openVisits == null || snapshot.data.length != _openVisits.length) {
             _openVisits = snapshot.data;
@@ -123,7 +124,7 @@ class _OpenVisitsState extends State<OpenVisits>{
                                globals.user.role == "PROFESSOR"?
                                Row(
                                    children: [
-                                     _buildListSubscribesButton(),
+                                     _buildListSubscribesButton(dto),
                                      _buildEditButton(),
                                      _buildRemoveButton()
                                    ]
@@ -142,8 +143,6 @@ class _OpenVisitsState extends State<OpenVisits>{
         )
     );
   }
-
-
 
   Widget _buildUserButtons(dto){
     if(dto.updatingSubscription){
@@ -223,7 +222,7 @@ class _OpenVisitsState extends State<OpenVisits>{
     );
   }
 
-  Widget _buildListSubscribesButton(){
+  Widget _buildListSubscribesButton(dto){
     return Container(
         child:Padding(padding: EdgeInsets.only(right: 5.0), child: ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -231,7 +230,7 @@ class _OpenVisitsState extends State<OpenVisits>{
             ),
             child: Text("Inscritos"),
             onPressed: () async {
-
+              Navigator.pushNamed(context, '/visit-subscriptions',arguments: dto);
             }
         )
         )
