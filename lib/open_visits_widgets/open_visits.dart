@@ -125,7 +125,6 @@ class _OpenVisitsState extends State<OpenVisits>{
                                Row(
                                    children: [
                                      _buildListSubscribesButton(dto),
-                                     _buildEditButton(),
                                      _buildRemoveButton()
                                    ]
                                ):
@@ -174,6 +173,7 @@ class _OpenVisitsState extends State<OpenVisits>{
               Subscription subscription = await createSubscription(dto.visit);
               setState(() {
                 dto.subscription = subscription;
+                print(subscription.id);
                 dto.statusSubscription = subscription.status;
                 dto.updatingSubscription = false;
               });

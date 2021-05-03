@@ -22,7 +22,8 @@ class Subscription{
   Map<String, dynamic> toJson(){
     return{
       '_id': id,
-      'status': status
+      'status': status,
+      'visit': visit ==null? null:visit
     };
   }
 }

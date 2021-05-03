@@ -39,7 +39,7 @@ class Visit{
       'timeToLeave':timeToLeave.toString(),
       'timeToArrive': timeToArrive.toString(),
       'vacancies': vacancies.toString(),
-      'company': company.id
+      'company': company==null?null:company.id
     };
   }
 }
