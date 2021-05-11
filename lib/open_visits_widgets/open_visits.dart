@@ -251,5 +251,4 @@ class _OpenVisitsState extends State<OpenVisits>{
         )
     );
   }
-
 }

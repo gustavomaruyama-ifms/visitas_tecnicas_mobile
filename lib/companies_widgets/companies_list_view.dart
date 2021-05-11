@@ -43,7 +43,7 @@ class _CompaniesListViewState extends State<CompaniesListView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Company>>(
-        future: listAllCompanies(1,10),
+        future: listAllCompanies(1,20),
         builder: (context, snapshot){
           if (snapshot.hasError) print(snapshot.error);
           if(snapshot.hasData) {
