@@ -117,9 +117,9 @@ class CompanyDetails extends StatelessWidget{
                 ),
                 ListView.builder(
                   shrinkWrap: true,
-                  itemCount: company.disciplines.length,
+                  itemCount: company.discipline.length,
                   itemBuilder: (context, index) {
-                    final discipline = company.disciplines[index];
+                    final discipline = company.discipline[index];
 
                     return Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 5),

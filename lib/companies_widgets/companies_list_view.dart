@@ -51,6 +51,7 @@ class _CompaniesListViewState extends State<CompaniesListView> {
             this._companies = snapshot.data;
 
             return ListView.builder(
+
               itemCount: this._companies.length,
               itemBuilder: _itemBuilder,
             );

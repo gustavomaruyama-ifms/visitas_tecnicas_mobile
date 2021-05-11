@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visitas_tecnicas_mobile/about_visits_widgets/about_visits.dart';
+import 'package:visitas_tecnicas_mobile/companies_widgets/add_company.dart';
 import 'package:visitas_tecnicas_mobile/companies_widgets/company_detail.dart';
 import 'package:visitas_tecnicas_mobile/login_widgets/login.dart';
 import 'package:visitas_tecnicas_mobile/main_widgets/home.dart';
@@ -62,6 +63,9 @@ class Router{
       case '/visit-subscriptions':{
         var visitDTO = settings.arguments;
         return MaterialPageRoute(builder: (_) => checkAuth(VisitSubscriptions(visitDTO)));
+      }
+      case '/add-company':{
+        return MaterialPageRoute(builder: (_) => checkAuth(AddCompany()));
       }
     }
   }

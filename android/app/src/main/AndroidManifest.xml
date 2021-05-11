@@ -2,6 +2,7 @@
     package="br.edu.ifms.visita_tecnica_mobile">
    <application
         android:label="visitas_tecnicas_mobile"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

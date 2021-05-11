@@ -1,5 +1,10 @@
 final API_URL = "visita-tecnica.herokuapp.com";
+//final API_URL = "localhost:5000";
 final COMPANY_URI = "company";
 final USER_URI = "user";
 final VISIT_URI = "visit";
 final SUBSCRIPTION_URI = 'subscription';
+final SECTOR_URI ='sector';
+final DISCIPLINE_URI ='discipline';
+final IBGE_URL_LOCALIDADES = 'servicodados.ibge.gov.br/api/v1/localidades';
+final VIACEP_URL = 'viacep.com.br';

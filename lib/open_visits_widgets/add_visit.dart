@@ -85,20 +85,14 @@ class _AddVisitState extends State<AddVisit>{
   Widget _buildDateScreen(){
       return ListView(
           children:[
-            Padding(
-                padding: EdgeInsets.only(left: 5.0, top: 20.0, right: 5.0, bottom: 5.0),
-                child:Text("Data e Horários", style: Theme.of(context).textTheme.headline6)
-            ),
-
-            Divider(indent: 5.0, endIndent: 5.0,),
-
             Card(
-            child: Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0, bottom: 20.0),
+            child: Container(
+              padding: EdgeInsets.only(top: 10.0, left: 10.0, right:10.0, bottom: 20.0),
               child:Column(
+
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                      _buildPadding(DateTimeField(
+                      DateTimeField(
                       format: DateFormat("dd/MM/yyyy"),
                       initialValue: _date,
                       onChanged: (value) {
@@ -116,11 +110,10 @@ class _AddVisitState extends State<AddVisit>{
                         );
                       },
                       decoration: InputDecoration(
-                        labelText: "Data",
-                        border: _buildInputBorder(),
+                        labelText: "Data"
                       ),
-                  )),
-                  _buildPadding(DateTimeField(
+                  ),
+                 DateTimeField(
                     format: DateFormat("HH:mm"),
                     initialValue: _timeToLeave,
                     onChanged: (value) {
@@ -139,11 +132,10 @@ class _AddVisitState extends State<AddVisit>{
                       return DateTimeField.convert(time);
                     },
                     decoration: InputDecoration(
-                      labelText: "Horário de Saída",
-                      border: _buildInputBorder(),
+                      labelText: "Horário de Saída"
                     ),
-                  )),
-                  _buildPadding(DateTimeField(
+                  ),
+                  DateTimeField(
                     format: DateFormat("HH:mm"),
                     initialValue: _timeToArrive,
                     onChanged: (value) {
@@ -162,11 +154,10 @@ class _AddVisitState extends State<AddVisit>{
                       return DateTimeField.convert(time);
                     },
                     decoration: InputDecoration(
-                      labelText: "Horário de Retorno",
-                      border: _buildInputBorder(),
+                      labelText: "Horário de Retorno"
                     ),
                   )
-                  ),
+                  ,
                 ],
               ),
           )
@@ -177,16 +168,9 @@ class _AddVisitState extends State<AddVisit>{
   Widget _buildVagasScreen(){
     return ListView(
         children:[
-          Padding(
-              padding: EdgeInsets.only(left: 5.0, top: 20.0, right: 5.0, bottom: 5.0),
-              child:Text("Vagas", style: Theme.of(context).textTheme.headline6)
-          ),
-
-          Divider(indent: 5.0, endIndent: 5.0,),
-
           Card(
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0, bottom: 20.0),
+              child: Container(
+                padding: EdgeInsets.only(top: 10.0, left: 10.0, right:10.0, bottom: 20.0),
                 child:Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -201,7 +185,7 @@ class _AddVisitState extends State<AddVisit>{
                         },
                         decoration: InputDecoration(
                           labelText: "Quantidade de Vagas",
-                          border: _buildInputBorder(),
+
                         ),
                       )
                   ],
@@ -209,19 +193,6 @@ class _AddVisitState extends State<AddVisit>{
               )
           )
         ]);
-  }
-
-  OutlineInputBorder _buildInputBorder(){
-    return OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10)
-    );
-  }
-
-  Padding _buildPadding(child){
-    return Padding(
-        padding: EdgeInsets.only(top: 10),
-        child: child
-    );
   }
 
   Widget _buildFinalizacaoScreen(){
@@ -262,7 +233,18 @@ class _AddVisitState extends State<AddVisit>{
             Card(child:_showVagas()),
           ],
         ),
-      floatingActionButton: validate()?FloatingActionButton(child: Icon(Icons.check), onPressed: finalizar):null,
+      floatingActionButton: validate()?
+      FloatingActionButton(child: Icon(Icons.check), onPressed: finalizar, backgroundColor: Colors.green,):
+      FloatingActionButton(child: Icon(Icons.check), backgroundColor: Colors.grey,
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text("Preencha todos os campos"),
+                behavior: SnackBarBehavior.floating
+            ),
+          );
+        },
+      ),
     );
   }
 

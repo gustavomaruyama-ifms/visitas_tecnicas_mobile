@@ -12,7 +12,6 @@ Future<List<Subscription>> listVisitSubscriptions(visitId, page, quantityPerPage
   },);
 
   if(response.statusCode == 200){
-    final parsed = await jsonDecode(response.body).cast<Map<String,dynamic>>();
     return compute(parseSubscription, response.body);
   }else{
     throw Exception(response.body);

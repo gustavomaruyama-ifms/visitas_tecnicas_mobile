@@ -13,4 +13,10 @@ class Discipline{
     );
 
   }
+
+  Map<String, String> toJson() {
+    return {
+      '_id': id
+    };
+  }
 }
