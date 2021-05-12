@@ -7,6 +7,9 @@ import 'package:visitas_tecnicas_mobile/login_widgets/login.dart';
 import 'package:visitas_tecnicas_mobile/main_widgets/home.dart';
 import 'package:visitas_tecnicas_mobile/my_visits_widgets/my_visits.dart';
 import 'package:visitas_tecnicas_mobile/open_visits_widgets/add_visit.dart';
+import 'package:visitas_tecnicas_mobile/open_visits_widgets/finalized_visits.dart';
+import 'package:visitas_tecnicas_mobile/open_visits_widgets/presence_list.dart';
+import 'package:visitas_tecnicas_mobile/open_visits_widgets/visit_finalize.dart';
 import 'package:visitas_tecnicas_mobile/open_visits_widgets/visit_subscriptions.dart';
 import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 
@@ -63,6 +66,17 @@ class Router{
       case '/visit-subscriptions':{
         var visitDTO = settings.arguments;
         return MaterialPageRoute(builder: (_) => checkAuth(VisitSubscriptions(visitDTO)));
+      }
+      case '/visit-finalize':{
+        var visitDTO = settings.arguments;
+        return MaterialPageRoute(builder: (_) => checkAuth(VisitFinalize(visitDTO)));
+      }
+      case '/presence-list':{
+        var visit = settings.arguments;
+        return MaterialPageRoute(builder: (_) => checkAuth(PresenceList(visit)));
+      }
+      case '/finalized-visits':{
+        return MaterialPageRoute(builder: (_) => checkAuth(FinalizedVisits()));
       }
       case '/add-company':{
         return MaterialPageRoute(builder: (_) => checkAuth(AddCompany()));

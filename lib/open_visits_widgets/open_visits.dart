@@ -114,6 +114,8 @@ class _OpenVisitsState extends State<OpenVisits>{
                                 Text("Data: ${dto.formattedDate}"),
                                 Text("Saída/Retorno: ${dto.formattedtimeToLeave } Hs / ${dto.formattedtimeToArrive} Hs"),
                                 Text("Nº de vagas: ${dto.visit.vacancies}"),
+                                globals.user.role == "PROFESSOR"?
+                                Text("Status: ${dto.visit.status}"):
                                 Text("Status: ${dto.statusSubscription}"),
                               ]
                            ),
@@ -121,24 +123,47 @@ class _OpenVisitsState extends State<OpenVisits>{
                           Padding(
                                padding: const EdgeInsets.only(top: 10.0),
                                child:
-                               globals.user.role == "PROFESSOR"?
+                               globals.user.role == "PROFESSOR" && dto.authorizedToEdit?
                                Row(
                                    children: [
+                                     dto.readyToFinalize?
+                                     _buildFinalizeButton(dto):
                                      _buildListSubscribesButton(dto),
                                      _buildRemoveButton()
                                    ]
                                ):
+                               globals.user.role == "ESTUDANTE"?
                                Row(
                                    children: [
+                                     dto.readyToFinalize?Container():
                                      _buildUserButtons(dto)
                                    ]
-                               )
+                               ):
+                               Container()
                            )
                         ]
                     )
                 )
               ],
             )
+        )
+    );
+  }
+
+  Widget _buildFinalizeButton(dto){
+    return Container(
+        child:Padding(padding: EdgeInsets.only(right: 5.0), child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.orange,
+            ),
+            child: Text("Finalizar"),
+            onPressed: () async {
+              await Navigator.pushNamed(context, '/visit-finalize',arguments: dto);
+              setState(() {
+
+              });
+            }
+        )
         )
     );
   }

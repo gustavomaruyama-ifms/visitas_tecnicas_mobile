@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:visitas_tecnicas_mobile/models/company.dart';
 import 'package:visitas_tecnicas_mobile/models/course.dart';
 import 'package:visitas_tecnicas_mobile/models/user.dart';
@@ -39,7 +40,19 @@ class Visit{
       'timeToLeave':timeToLeave.toString(),
       'timeToArrive': timeToArrive.toString(),
       'vacancies': vacancies.toString(),
-      'company': company==null?null:company.id
+      'company': company==null?null:company.id,
     };
+  }
+
+  String get formattedDate{
+    return DateFormat("dd/MM/yyyy").format(date.toLocal()).toString();
+  }
+
+  String get formattedtimeToArrive{
+    return DateFormat("HH:mm").format(timeToLeave.toLocal()).toString();
+  }
+
+  String get formattedtimeToLeave{
+    return DateFormat("HH:mm").format(timeToArrive.toLocal()).toString();
   }
 }

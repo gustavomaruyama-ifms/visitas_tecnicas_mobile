@@ -37,7 +37,9 @@ class _MainDrawerState extends State<MainDrawer>{
           ListTile(title: Text("O que é Visita Técnica?"),leading: Icon(Icons.help), onTap: _navigateToAboutTechnicaVisit, ),
           ListTile(title: Text("Empresas/Instituições"),leading: Icon(Icons.business), onTap: _navigateToCompanies, ),
           ListTile(title: Text("Visitas Técnicas Abertas"),leading: Icon(Icons.campaign), onTap: _navigateToOpenVisits, ),
-          ListTile(title: Text("Minhas Visitas"),leading: Icon(Icons.fact_check), onTap: _navigateToMyVisits, ),
+          globals.user.role == "ESTUDANTE"?
+          ListTile(title: Text("Minhas Visitas"),leading: Icon(Icons.fact_check), onTap: _navigateToMyVisits, ):
+          ListTile(title: Text("Visitas Técnicas Finalizadas"),leading: Icon(Icons.fact_check), onTap: _navigateToFinalizedVisits, ),
           ListTile(title: Text("Logout"),leading: Icon(Icons.logout), onTap: _logout, ),
         ]
     ));
@@ -66,6 +68,11 @@ class _MainDrawerState extends State<MainDrawer>{
   void _navigateToMyVisits(){
     Navigator.pop(context);
     Navigator.pushNamed(context, '/my-visits');
+  }
+
+  void _navigateToFinalizedVisits(){
+    Navigator.pop(context);
+    Navigator.pushNamed(context, '/finalized-visits');
   }
 
   void _logout() async {

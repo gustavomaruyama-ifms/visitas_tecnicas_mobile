@@ -6,16 +6,18 @@ class Subscription{
   Visit visit;
   String status;
   User user;
+  bool presence;
   bool updatingSubscription = false;
 
-  Subscription({this.id, this.visit, this.status, this.user});
+  Subscription({this.id, this.visit, this.status, this.user,this.presence});
 
   factory Subscription.fromJson(Map<String, dynamic> json){
     return Subscription(
       id: json['_id'],
       visit: json['visit'] is Map ? Visit.fromJson(json['visit']): Visit(id: json['visit']),
       user: json['user'] is Map? User.fromJson(json['user']): User(id: json['user']),
-      status: json['status']
+      status: json['status'],
+      presence: json['presence']
     );
   }
 
