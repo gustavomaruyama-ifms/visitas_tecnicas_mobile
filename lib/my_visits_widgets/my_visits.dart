@@ -95,9 +95,10 @@ class _MyVisitsState extends State<MyVisits>{
                                 Text("Não é possível atribuir nota")
                                 ,
                                 _buildRating(subscription),
+                                subscription.presence?
                                 ElevatedButton(onPressed: (){
                                   Navigator.pushNamed(context, "/certificate-screen", arguments: subscription);
-                                }, child: Text('Certificado'))
+                                }, child: Text('Certificado')):Container()
                               ]
                           ),
 
