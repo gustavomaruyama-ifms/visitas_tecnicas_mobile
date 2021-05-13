@@ -5,6 +5,7 @@ import 'package:visitas_tecnicas_mobile/companies_widgets/add_company.dart';
 import 'package:visitas_tecnicas_mobile/companies_widgets/company_detail.dart';
 import 'package:visitas_tecnicas_mobile/login_widgets/login.dart';
 import 'package:visitas_tecnicas_mobile/main_widgets/home.dart';
+import 'package:visitas_tecnicas_mobile/my_visits_widgets/certificate_screen.dart';
 import 'package:visitas_tecnicas_mobile/my_visits_widgets/my_visits.dart';
 import 'package:visitas_tecnicas_mobile/open_visits_widgets/add_visit.dart';
 import 'package:visitas_tecnicas_mobile/open_visits_widgets/finalized_visits.dart';
@@ -29,8 +30,8 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
         title: "Visitas Técnicas",
-        initialRoute: '/',
-        onGenerateRoute: Router.generateRoute,
+        initialRoute: '/my-visits',
+        onGenerateRoute: Router.generateRoute
     );
   }
 }
@@ -80,6 +81,10 @@ class Router{
       }
       case '/add-company':{
         return MaterialPageRoute(builder: (_) => checkAuth(AddCompany()));
+      }
+      case '/certificate-screen':{
+        var subscription = settings.arguments;
+        return MaterialPageRoute(builder: (_) => checkAuth(CertificateScreen(subscription: subscription,)));
       }
     }
   }

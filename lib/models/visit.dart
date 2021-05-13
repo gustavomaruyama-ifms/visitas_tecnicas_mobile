@@ -29,7 +29,7 @@ class Visit{
       date: DateTime.parse(json['date']),
       timeToArrive: DateTime.parse(json['timeToLeave']),
       timeToLeave: DateTime.parse(json['timeToArrive']),
-      status: json['status']
+      status: json['status'],
     );
   }
 
@@ -45,7 +45,7 @@ class Visit{
   }
 
   String get formattedDate{
-    return DateFormat("dd/MM/yyyy").format(date.toLocal()).toString();
+    return DateFormat("dd/MM/yyyy").format(date).toString();
   }
 
   String get formattedtimeToArrive{
@@ -54,5 +54,10 @@ class Visit{
 
   String get formattedtimeToLeave{
     return DateFormat("HH:mm").format(timeToArrive.toLocal()).toString();
+  }
+
+  String get cargaHoraria{
+    int ch = timeToLeave.difference(timeToArrive).inHours;
+    return ch.toString();
   }
 }

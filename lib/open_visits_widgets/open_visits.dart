@@ -111,8 +111,8 @@ class _OpenVisitsState extends State<OpenVisits>{
                                 ),
                                 Text(dto.visit.company.city),
                                 Text(dto.visit.company.state),
-                                Text("Data: ${dto.formattedDate}"),
-                                Text("Saída/Retorno: ${dto.formattedtimeToLeave } Hs / ${dto.formattedtimeToArrive} Hs"),
+                                Text("Data: ${dto.visit.formattedDate}"),
+                                Text("Saída/Retorno: ${dto.visit.formattedtimeToLeave } Hs / ${dto.visit.formattedtimeToArrive} Hs"),
                                 Text("Nº de vagas: ${dto.visit.vacancies}"),
                                 globals.user.role == "PROFESSOR"?
                                 Text("Status: ${dto.visit.status}"):

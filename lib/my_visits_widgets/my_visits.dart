@@ -5,6 +5,7 @@ import 'package:visitas_tecnicas_mobile/services/find_logo_by_company_id.dart';
 import 'package:visitas_tecnicas_mobile/services/list_user_subscription.dart';
 import 'package:visitas_tecnicas_mobile/services/update_assesment.dart';
 
+
 class MyVisits extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -86,15 +87,17 @@ class _MyVisitsState extends State<MyVisits>{
                                   padding: EdgeInsets.only(bottom: 10),
                                   child: Text(subscription.visit.company.name, style: TextStyle(fontWeight: FontWeight.bold)),
                                 ),
-                                Text(subscription.visit.company.city),
-                                Text(subscription.visit.company.state),
+                                Text('${subscription.visit.company.city} - ${subscription.visit.company.state}'),
                                 Text("Data: ${subscription.visit.formattedDate}"),
                                 _buildPresenceStatus(subscription),
                                 subscription.presence?
                                 Text("Dê uma nota:"):
                                 Text("Não é possível atribuir nota")
                                 ,
-                                _buildRating(subscription)
+                                _buildRating(subscription),
+                                ElevatedButton(onPressed: (){
+                                  Navigator.pushNamed(context, "/certificate-screen", arguments: subscription);
+                                }, child: Text('Certificado'))
                               ]
                           ),
 
@@ -118,9 +121,9 @@ class _MyVisitsState extends State<MyVisits>{
 
   Widget _buildPresenceStatus(subscription){
     if(!subscription.presence){
-      return Text("Presença: Não compareceu.");
+      return Text("Presença não confirmada", style: TextStyle(color: Colors.red),);
     }
-    return Text("Presença: Presente");
+    return Text("Presença confirmada", style: TextStyle(color: Colors.green),);
   }
 
   Widget _buildRating(subscription){
@@ -140,7 +143,6 @@ class _MyVisitsState extends State<MyVisits>{
   Widget _buildStar(index, subscription){
     int note = subscription.assessment;
     return IconButton(
-
       icon: index<=note?Icon(Icons.star):Icon(Icons.star_border),
       color: index<=note?Colors.yellow:Colors.black26,
       onPressed: () async{
