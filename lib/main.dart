@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
         title: "Visitas Técnicas",
-        initialRoute: '/my-visits',
+        initialRoute: '/',
         onGenerateRoute: Router.generateRoute
     );
   }
