@@ -11,7 +11,7 @@ Future<User> authenticate (email, password) async {
   };
 
   final response = await http.post(
-      Uri.http(API_URL, "$USER_URI/authenticate"),
+      Uri.https(API_URL, "$USER_URI/authenticate"),
       headers: <String,String>{
         'Content-Type':'application/json'
       },

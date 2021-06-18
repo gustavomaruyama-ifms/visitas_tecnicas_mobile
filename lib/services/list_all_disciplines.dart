@@ -9,7 +9,7 @@ import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 
 Future<List<Discipline>> listAllSDisciplines(page, quantityPerPage) async{
   final user = await getUserData();
-  final response = await http.get(Uri.http(API_URL, "$DISCIPLINE_URI/page/$page/quantityPerPage/$quantityPerPage"), headers: <String,String>{
+  final response = await http.get(Uri.https(API_URL, "$DISCIPLINE_URI/page/$page/quantityPerPage/$quantityPerPage"), headers: <String,String>{
     'x-auth-token': user.token
   },);
 

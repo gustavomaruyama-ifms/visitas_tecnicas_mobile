@@ -7,7 +7,7 @@ import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 Future<Subscription> updateSubscriptionPresence(subscription) async{
   final user = await getUserData();
 
-  final response = await http.put(Uri.http(API_URL,SUBSCRIPTION_URI+"/presence"),
+  final response = await http.put(Uri.https(API_URL,SUBSCRIPTION_URI+"/presence"),
       headers: <String,String>{
         'x-auth-token': user.token,
         'Content-Type':'application/json'

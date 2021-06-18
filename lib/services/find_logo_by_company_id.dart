@@ -6,7 +6,7 @@ import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 Future<CachedNetworkImage> findLogoByCompanyId(id, width, height) async{
   final user =  await getUserData();
   return CachedNetworkImage(
-    imageUrl: "http://$API_URL/$COMPANY_URI/id/$id/logo",
+    imageUrl: "https://$API_URL/$COMPANY_URI/id/$id/logo",
     placeholder: (context, url) => Icon(Icons.business),
     errorWidget: (context, url, error) {
       print(error.toString());

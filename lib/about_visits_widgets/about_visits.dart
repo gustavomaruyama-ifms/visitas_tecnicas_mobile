@@ -33,7 +33,7 @@ class AboutVisits extends StatelessWidget{
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 10 ,),
+                padding: const EdgeInsets.only(top: 10, right: 10, left: 10 ,),
                 child:VideoPlayerScreen()
               )
             ],
@@ -41,7 +41,7 @@ class AboutVisits extends StatelessWidget{
         ),
         // Description and share/explore buttons.
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+          padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
           child: DefaultTextStyle(
             softWrap: false,
             overflow: TextOverflow.ellipsis,
@@ -49,18 +49,15 @@ class AboutVisits extends StatelessWidget{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Visitas Técnica",
+                Text("Visitas Técnicas",
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.visible,
                   softWrap: true,
                 ),
-                Text("Tudo sobre...",
-                  style: descriptionStyle.copyWith(color: Colors.black54),
-                ),
                 Divider(),
                 Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 20),
-                  child:Text("A visita técnica tem por objetivo promover a integração entre a teoria e a prática no que se refere aos conhecimentos adquiridos pelos alunos na instituição de ensino; propiciar ao aluno a vivência do mercado de trabalho, produtos, processos e serviços in loco e a integração entre os mesmos; e, propiciar ao estudante a oportunidade de aprimorar a sua formação profissional e pessoal.",
+                  child:Text("Entenda o que é uma visita técnica assistindo ao vídeo, que foi feito especialmente para explicar de uma forma rápida o que é uma visita técnica, o que acontece durante uma visita e onde ocorre.",
                     textAlign: TextAlign.justify,
                     overflow: TextOverflow.visible,
                     softWrap: true

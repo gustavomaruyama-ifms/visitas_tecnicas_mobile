@@ -7,7 +7,7 @@ import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 Future<void> createVisit(visit) async{
   final user = await getUserData();
 
-  final response = await http.post(Uri.http(API_URL,VISIT_URI),
+  final response = await http.post(Uri.https(API_URL,VISIT_URI),
       headers: <String,String>{
         'x-auth-token': user.token,
         'Content-Type':'application/json'

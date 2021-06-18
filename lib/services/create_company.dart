@@ -9,7 +9,7 @@ Future<void> createCompany(company) async{
 
   String json = jsonEncode(company.toJson());
   print(json);
-  final response = await http.post(Uri.http(API_URL,COMPANY_URI),
+  final response = await http.post(Uri.https(API_URL,COMPANY_URI),
       headers: <String,String>{
         'x-auth-token': user.token,
         'Content-Type':'application/json'

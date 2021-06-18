@@ -7,7 +7,7 @@ import 'package:visitas_tecnicas_mobile/services/config.dart';
 import 'package:visitas_tecnicas_mobile/storage/get_user_data.dart';
 
 Future<List<UF>> listAllUFs() async{
-  final response = await http.get(Uri.http(IBGE_URL_LOCALIDADES, '/estados'));
+  final response = await http.get(Uri.https(IBGE_URL_LOCALIDADES, '/estados'));
   if(response.statusCode == 200){
     return compute(parseUF, response.body);
   }else{

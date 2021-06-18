@@ -9,7 +9,7 @@ Future<Subscription> createSubscription(visit) async{
 
   Subscription subscription = Subscription(visit: visit);
 
-  final response = await http.post(Uri.http(API_URL,SUBSCRIPTION_URI),
+  final response = await http.post(Uri.https(API_URL,SUBSCRIPTION_URI),
       headers: <String,String>{
         'x-auth-token': user.token,
         'Content-Type':'application/json'

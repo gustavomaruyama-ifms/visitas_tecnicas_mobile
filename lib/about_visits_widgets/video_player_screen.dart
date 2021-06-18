@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -15,7 +16,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.network('https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
+    //_controller = VideoPlayerController.network('https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
+    _controller = VideoPlayerController.asset('example_images/apresentacao-02.mp4');
     _controller.setLooping(false);
     _controller.addListener(() {
       if(_controller.value.position == _controller.value.duration){
@@ -47,7 +49,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               ]
             );
           } else {
-            return Container(child: CircularProgressIndicator(), padding: const EdgeInsets.all(20.0));
+            return Center(child: CircularProgressIndicator());
           }
         }
     );
@@ -65,8 +67,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   Widget _buildAspectRatio(){
     return AspectRatio(
-      aspectRatio: _controller.value.aspectRatio,
-      child: VideoPlayer(_controller)
+        aspectRatio: _controller.value.aspectRatio,
+        child: VideoPlayer(_controller)
     );
   }
 

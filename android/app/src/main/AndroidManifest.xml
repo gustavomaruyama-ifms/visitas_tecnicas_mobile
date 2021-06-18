@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.edu.ifms.visita_tecnica_mobile">
    <application
-        android:label="visitas_tecnicas_mobile"
+        android:label="VisitApp"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity

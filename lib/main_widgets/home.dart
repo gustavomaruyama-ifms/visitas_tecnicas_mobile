@@ -4,7 +4,7 @@ import 'package:visitas_tecnicas_mobile/main_widgets/main_drawer.dart';
 
 class Home extends StatelessWidget{
 
-  final APP_BAR_TITLE = "Home";
+  final APP_BAR_TITLE = "VisitApp";
 
   @override
   Widget build(BuildContext context) {
